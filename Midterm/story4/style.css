@@ -1,0 +1,21 @@
+p {
+  animation-duration: 3s;
+  animation-name: slidein;
+  /* animation-iteration-count: infinite; */
+  /* animation-direction: alternate; */
+  /* animation: 3s infinite alternate slidein; /* SHORTHAND */
+}
+
+@keyframes slidein {
+  from {
+    margin-top: 100%;
+    width: 200px;
+  }
+
+  /* add another keyframe */;
+
+  to {
+    margin-top: 0%;
+    width: 200px;
+  }
+}
