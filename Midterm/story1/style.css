@@ -1,10 +1,14 @@
+body {
+  background: #fbfbf8;
+}
+
 div {
   width: 100px;
   height: 100px;
-  background-color: red;
   text-align: center;
   transition: 1s ease-in-out;
 }
+
 div:hover {
   transform: rotateX(360deg);
 }

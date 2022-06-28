@@ -1,7 +1,6 @@
 div {
   width: 100px;
   height: 100px;
-  background-color: red;
   text-align: center;
   transition: 1s ease-in-out;
 }

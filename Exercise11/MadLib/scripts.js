@@ -1,20 +1,7 @@
-var storyText = 'It was 94 fahrenheit outside, so <span style="color:#66CC66">insertx</span> went for a walk.<br> When they got to <span style="color:#4287f5">inserty</span>, they stared in horror for a few moments, then <span style="color:#f54242">insertz</span>.<br> Bob saw the whole thing, but was not surprised — <span style="color:#66CC66">insertx</span> weighs 300 pounds, and it was a hot day.';
+var storyText = 'It was 94 fahrenheit outside, so <span style="color:#66CC66">insertx</span> went for a walk.<br> When they got to <span style="color:#4287f5">inserty</span>, they stared in horror for a few moments, then <span style="color:#f54242">insertz</span>.<br> Bob saw the whole thing, but was not surprised — <span style="color:#66CC66">insertx</span> hates a being sweaty, and it was a hot day.';
 const insertX = ["Willy the Goblin", "Big Daddy", "Father Christmas"]; //default name
 const insertY = ["the soup kitchen", "Disneyland", "the White House"]; //default place
 const insertZ = ["spontaneously combusted", "melted into a puddle on the sidewalk", "turned into a slug and crawled away"]; //default noun
-
-
-
-switch (prompt("Are you in the US? yes/no")) {
-case "no":
-  storyText = storyText.replace("fahrenheit", "celsius").replace("94", Math.round((94 - 32) * 5/9)).replace("pounds", "kilos").replace("300", Math.round(300*0.45359237));
-break;
-case "yes":
-break;
-default:
-document.write("Didn't enter a valid answer to where you are, assuming you are in the US :) <br><br>");
-break;
-}
 
 function randomValueFromArray(array){
 const random = Math.floor(Math.random()*array.length);
