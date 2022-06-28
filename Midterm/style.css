@@ -1,3 +1,7 @@
+body {
+  background: #fbfbf8;
+}
+
 .grid-container {
   display: grid;
   grid-template-areas:
