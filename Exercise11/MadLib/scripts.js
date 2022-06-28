@@ -1,33 +1,48 @@
-const customName = document.getElementById('customname');
-const randomize = document.querySelector('.randomize');
-const story = document.querySelector('.story');
+var storyText = 'It was 94 fahrenheit outside, so <span style="color:#66CC66">insertx</span> went for a walk.<br> When they got to <span style="color:#4287f5">inserty</span>, they stared in horror for a few moments, then <span style="color:#f54242">insertz</span>.<br> Bob saw the whole thing, but was not surprised — <span style="color:#66CC66">insertx</span> weighs 300 pounds, and it was a hot day.';
+const insertX = ["Willy the Goblin", "Big Daddy", "Father Christmas"]; //default name
+const insertY = ["the soup kitchen", "Disneyland", "the White House"]; //default place
+const insertZ = ["spontaneously combusted", "melted into a puddle on the sidewalk", "turned into a slug and crawled away"]; //default noun
+
+
+
+switch (prompt("Are you in the US? yes/no")) {
+case "no":
+  storyText = storyText.replace("fahrenheit", "celsius").replace("94", Math.round((94 - 32) * 5/9)).replace("pounds", "kilos").replace("300", Math.round(300*0.45359237));
+break;
+case "yes":
+break;
+default:
+document.write("Didn't enter a valid answer to where you are, assuming you are in the US :) <br><br>");
+break;
+}
 
 function randomValueFromArray(array){
-  const random = Math.floor(Math.random()*array.length);
-  return array[random];
+const random = Math.floor(Math.random()*array.length);
+return array[random];
 }
 
-const storyText = "It was 94 fahrenheit outside, so :insertx: went for a walk. When they got to :inserty:, they stared in horror for a few moments, then :insertz:. Bob saw the whole thing, but was not surprised — :insertx: weighs 300 pounds, and it was a hot day.";
-const insertX = ["Willy the Goblin", "Big Daddy", "Father Christmas"];
-const insertY = ["the soup kitchen", "Disneyland", "the White House"];
-const insertZ = ["spontaneously combusted", "melted into a puddle on the sidewalk", "turned into a slug and crawled away"];
-const newStory = storyText;
-
-randomize.addEventListener('click', result);
-
-function result() {
-
-  if(customName.value !== '') {
-    const name = customName.value;
-
-  }
-
-  if(document.getElementById("uk").checked) {
-    const weight = Math.round(300);
-    const temperature =  Math.round(94);
-
-  }
-
-  story.textContent = ;
-  story.style.visibility = 'visible';
+var mapObj;
+switch (prompt("Would you like a random story? yes/no")) {
+case "yes":
+  mapObj = {
+  insertx: randomValueFromArray(insertX),
+  inserty: randomValueFromArray(insertY),
+  insertz: randomValueFromArray(insertZ)
+};
+break;
+case "no":
+var outputp = prompt("Enter a Name, location, and noun, delimited by commas.");
+mapObj = {
+  insertx: outputp.split(',')[0],
+  inserty: outputp.split(',')[1],
+  insertz: outputp.split(',')[2]
+};
+break;
+default:
+document.write("Do you want a random story or not!?!? <br><br>");
+break;
 }
+
+var madLib = storyText.replace(/\b(?:insertx|inserty|insertz)\b/gi, matched => mapObj[matched]);
+
+document.write(madLib);
