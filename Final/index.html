@@ -6,11 +6,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Maze</title>
+  <link rel="stylesheet" href="style.css">
   <script src="JSDict.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-  <h1 id = "QuestionLabel" style="text-align:center">Maze</h1>
+  <h1 id = "QuestionLabel" style="text-align:center">Labyrinth</h1>
+  <center><button class="startbutton" id="startgame" onclick="nextq();"> Start </button></center>
   <p id="ExitPoints"></p>
   <p id="Luck"></p>
     <form id="RadioForm" style= "text-align:center" onsubmit='return onSub();'>
@@ -21,13 +23,14 @@
 	const RadioFormElement = document.getElementById("RadioForm");
 	const ExitPointsElement = document.getElementById("ExitPoints");
 	const LuckElement = document.getElementById("Luck");
+  const StartGameElement = document.getElementById("startgame");
 
 	var exitpoints = 0;
 	var luck = 5;
 	var questionnumb = 0;
 
 	const golemstr = "You come across a golem, golem will not grant you passage to unless you answer its question: ";
-	const spxstr = "A minor sphinx stands in your way, you must answer the riddle to be granted passage (answer one word, no caps, four letters): ";
+	const spxstr = "A minor sphinx stands in your way, you must answer the riddle to be granted passage (answer one word, no caps): ";
 
 	var questionanswer = new JSdict();
 
@@ -41,16 +44,22 @@
 	questionanswer.add(6, ["FR", spxstr + "This thing all things devours. Birds, beasts, trees, flowers; gnaws iron, bites steel; grinds hard stones to meal; slays kings, ruins town, and beats mountains down.", "time"]);
 	questionanswer.add(7, ["FR", spxstr + "Greatest man nor tallest tree, begins as any more than me.", "seed"]);
 
-	nextq();
+  startpage();
+
+  function startpage(){
+    QuestionLabelElement.innerHTML = "You are trapped in the Labyrinth, you must find a way out!";
+
+  }
 
 	function killgame() {
 		exitpoints = 0;
 		luck = 5;
 		questionnumb = 0;
+    stratpage();
 	}
 
 	function nextq() {
-
+    StartGameElement.style.visibility = 'hidden';
 		if (questionnumb > 7 || exitpoints >= 5) {
 			alert("You have won!");
 			killgame();
@@ -72,7 +81,7 @@
 			ihtml = '<input type="text" id="textBox1" name="textBox1"><br><br>'
 		}
 
-		RadioFormElement.innerHTML = ihtml + '<br><input type="submit" name="mysubmit" value="Submit"/>';
+		RadioFormElement.innerHTML = ihtml + '<br><br><input type="submit" name="mysubmit" value="Answer"/>';
 	}
 
 	function luckmm() {
@@ -87,7 +96,7 @@
 		if (rndout == 1) {
 			var badint = Math.floor(Math.random() * 3);
 			alert(badcase[badint]);
-			alert("You have died!")
+			alert("YOU DIED")
 			killgame();
 		} else if (rndout == 5) {
 			alert("You found princess Ariadne; she leads you out of the labyrinth.");
@@ -97,7 +106,7 @@
 			exitpoints += 2;
 			luck = 5;
 		} else {
-			alert("Not lucky nor unlucky. You escaped the situation with no harm." + rndout);
+			alert("Not lucky nor unlucky. You escaped the situation with no harm.");
 		}
 	}
 
