@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Maze</title>
+  <script src="JSDict.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+  <h1 id = "QuestionLabel" style="text-align:center">Maze</h1>
+  <p id="ExitPoints"></p>
+  <p id="Luck"></p>
+    <form id="RadioForm" style= "text-align:center" onsubmit='return onSub();'>
+
+    </form>
+    <script>
+	const QuestionLabelElement = document.getElementById("QuestionLabel");
+	const RadioFormElement = document.getElementById("RadioForm");
+	const ExitPointsElement = document.getElementById("ExitPoints");
+	const LuckElement = document.getElementById("Luck");
+
+	var exitpoints = 0;
+	var luck = 5;
+	var questionnumb = 0;
+
+	const golemstr = "You come across a golem, golem will not grant you passage to unless you answer its question: ";
+	const spxstr = "A minor sphinx stands in your way, you must answer the riddle to be granted passage (answer one word, no caps, four letters): ";
+
+	var questionanswer = new JSdict();
+
+	questionanswer.add(0, ["M", golemstr + "Who is the goddess of chaos?", "Eris", "Aphrodite", "Hera", "Demeter", "Eris"]);
+	questionanswer.add(1, ["M", golemstr + "Who birthed the minotaur?", "Pasiphae", "Pasiphae", "Scylla", "Circe", "Perse"]);
+	questionanswer.add(2, ["M", golemstr + "Who is the messenger of gods?", "Hermes", "Hermes", "Cupid", "Heracles", "Apollo"]);
+	questionanswer.add(3, ["M", golemstr + "Which state implements oligarchy?", "Sparta", "Athens", "Sparta", "Thebes", "Corinth"]);
+
+	questionanswer.add(4, ["FR", spxstr + "There is one father and twelve children; of these each Has twice thirty daughters of different appearance: Some are white to look at and the others black in turn; They are immortal and yet they all fade away", "year"]);
+	questionanswer.add(5, ["FR", spxstr + "What goes on four legs in the morning, two legs at noon, and three in the evening?", "human"]);
+	questionanswer.add(6, ["FR", spxstr + "This thing all things devours. Birds, beasts, trees, flowers; gnaws iron, bites steel; grinds hard stones to meal; slays kings, ruins town, and beats mountains down.", "time"]);
+	questionanswer.add(7, ["FR", spxstr + "Greatest man nor tallest tree, begins as any more than me.", "seed"]);
+
+	nextq();
+
+	function killgame() {
+		exitpoints = 0;
+		luck = 5;
+		questionnumb = 0;
+	}
+
+	function nextq() {
+
+		if (questionnumb > 7 || exitpoints >= 5) {
+			alert("You have won!");
+			killgame();
+		}
+
+		ExitPointsElement.innerHTML = "Exit Points: " + exitpoints;
+		LuckElement.innerHTML = "Luck: " + luck;
+
+		var qadata = questionanswer.getVal(questionnumb);
+		QuestionLabelElement.innerHTML = qadata[1];
+
+		var ihtml = '';
+
+		if (qadata[0] == "M") {
+			for (var i = 3; i < qadata.length; i++) {
+				ihtml += '<input type="radio" name="answer" id="' + i + '" value="' + i + '"> ' + qadata[i];
+			}
+		} else {
+			ihtml = '<input type="text" id="textBox1" name="textBox1"><br><br>'
+		}
+
+		RadioFormElement.innerHTML = ihtml + '<br><input type="submit" name="mysubmit" value="Submit"/>';
+	}
+
+	function luckmm() {
+		alert("Wrong! Rolling random event!");
+
+		var badcase = ["You fall into the pit of the Minotaur, and the Minotaur eats you.", "You come across the altar of Helios, you are burned alive by the bright sun light.", "You built a wing to fly out of the labyrinth. You flew too close to the sun, your wax melts, and you fall."];
+
+		luck--;
+
+		var rndout = Math.floor(Math.random() * (luck + 1));
+
+		if (rndout == 1) {
+			var badint = Math.floor(Math.random() * 3);
+			alert(badcase[badint]);
+			alert("You have died!")
+			killgame();
+		} else if (rndout == 5) {
+			alert("You found princess Ariadne; she leads you out of the labyrinth.");
+			killgame();
+		} else if (rndout == 3) {
+			alert("You find the shrine of Tyche, gaining the blessing of luck, resets luck and add 2 exit points.");
+			exitpoints += 2;
+			luck = 5;
+		} else {
+			alert("Not lucky nor unlucky. You escaped the situation with no harm." + rndout);
+		}
+	}
+
+	function atLeastOneRadio() {
+		return ($('input[type=radio]:checked').length > 0);
+	}
+
+	function onSub() {
+		var qadata = questionanswer.getVal(questionnumb);
+		if (qadata[0] == "M") {
+			if (!atLeastOneRadio()) {
+				alert('No radio was selected. Try again.');
+				return false;
+			} else {
+				var checkedButton = document.querySelector('input[name="answer"]:checked').value;
+				if (qadata[2] == qadata[checkedButton]) {
+					alert("Correct!");
+					exitpoints++;
+					questionnumb++;
+				} else {
+					questionnumb++;
+					luckmm();
+				}
+			}
+		} else {
+			if (qadata[2] == document.getElementById("textBox1").value) {
+				alert("Correct!");
+				exitpoints++;
+				questionnumb++;
+			} else {
+				questionnumb++;
+				luckmm();
+			}
+		}
+
+		nextq();
+
+		return false;
+
+	}
+    </script>
+</body>
+</html>
